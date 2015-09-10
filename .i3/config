@@ -13,6 +13,7 @@ set $mod Mod4
 
 # font for window titles. ISO 10646 = Unicode
 font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+font pango:Droid Sans Mono 16
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -159,6 +160,7 @@ bar {
             inactive_workspace #888888 #222222
             urgent_workspace #ffffff #900000
         }
+        font pango:Droid Sans Mono 18
 }
 
 mode "Exit (L)ogout, (R)eboot, (P)oweroff, (S)leep" {
@@ -183,6 +185,11 @@ bindsym XF86AudioNext exec "spotify-notify.py -a next"
 bindsym XF86AudioPrev exec "spotify-notify.py -a previous"
 bindsym XF86AudioPlay exec "spotify-notify.py -a playPause"
 
+# Bind media keys to volume control
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 1 +5% && killall -SIGUSR1 i3status
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume 1 -- -5% && killall -SIGUSR1 i3status
+bindsym XF86AudioMute exec pactl set-sink-mute 1 toggle && killall -SIGUSR1 i3status
+
 # Bind work keyboard media keys (doesn't have audio keys...)
 bindsym XF86Mail exec "spotify-notify.py -a next"
 bindsym XF86HomePage exec "spotify-notify.py -a previous"
@@ -202,8 +209,8 @@ exec --no-startup-id nm-applet
 
 exec /bin/pa-applet
 
-assign [class="Chromium-browser"] 2
+assign [class="Chrome"] 2
 assign [class="Spotify"] 5
 
-exec chromium-browser
+exec chrome
 exec spotify
